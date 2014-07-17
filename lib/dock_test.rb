@@ -33,5 +33,14 @@ module DockTest
     def localhost?
       @url && ['127.0.0.1', 'localhost'].include?(URI.parse(@url).host)
     end
+
+    attr_reader :skippy_envs
+    def skippy=(envs)
+      @skippy_envs = Array(envs).map(&:to_s)
+    end
+
+    def config(&block)
+      block.call(DockTest)
+    end
   end
 end

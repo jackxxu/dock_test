@@ -4,6 +4,12 @@ module DockTest
     %w(get post put patch delete options head).each do |meth_name|
       define_method meth_name do |path, params = '', headers = {}, &block|
 
+        with_side_effects = verb_has_side_effects?(meth_name)
+
+        if with_side_effects && DockTest.skippy_envs.include?(dock_env)
+          skip_test_to_avoid_side_efforts
+        end
+
         uri = URI.join(DockTest.url, path)
 
         if DockTest.localhost?
@@ -11,7 +17,7 @@ module DockTest
         end
 
         # add the params to the GET requests
-        if meth_name == 'get' && !params.empty?
+        if !with_side_effects && !params.empty?
           if(params.is_a?(Hash))
             uri.query = URI.encode_www_form(URI.decode_www_form(uri.query || '') + params.to_a)
           else
@@ -22,7 +28,7 @@ module DockTest
         @last_request = Net::HTTP.const_get(meth_name.capitalize).new(uri.request_uri)
 
         # add the params to the body of other requests
-        if meth_name != 'get'
+        if with_side_effects
           @last_request.body = params
         end
 
@@ -45,6 +51,15 @@ module DockTest
     end
 
     private
+
+      def dock_env
+        ENV['DOCK_ENV']
+      end
+
+      def verb_has_side_effects?(verb)
+        %w(post put patch delete).include?(verb)
+      end
+
       def last_response
         @last_response
       end
@@ -53,5 +68,8 @@ module DockTest
         @last_request
       end
 
+      def skip_test_to_avoid_side_efforts
+        skip('this test is skipped in order to avoid potential side effects.')
+      end
   end
 end

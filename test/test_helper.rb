@@ -4,4 +4,8 @@ require 'bundler/setup'
 Bundler.require(:default, :test)
 require 'minitest/autorun'
 
-DockTest.url = (ENV['DOCK_ENV'] == 'production') ? 'http://floating-mesa-6194.herokuapp.com' : 'http://localhost:9871'
+DockTest.config do |c|
+  c.url = (ENV['DOCK_ENV'] == 'production') ? 'http://floating-mesa-6194.herokuapp.com' : 'http://localhost:9871'
+  c.skippy = :production
+end
+
