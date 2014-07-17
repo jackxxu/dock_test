@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = DockTest::VERSION
   spec.authors       = ["Jack Xu"]
   spec.email         = ["jackxxu@gmail.com"]
-  spec.summary       = spec.description = %q{a outside-in service api test framework.}
+  spec.summary       = spec.description = %q{an outside-in service api test framework.}
   spec.homepage      = "https://github.com/jackxxu/dock_test"
   spec.license       = "MIT"
 
