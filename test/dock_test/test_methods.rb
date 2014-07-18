@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'multi_json'
 
 class TestMethods < Minitest::Test
 
