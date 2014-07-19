@@ -4,7 +4,7 @@ Bundler.require(:default, :test)
 
 require 'dock_test'
 
-DockTest.config do |c|
+DockTest.configure do |c|
   c.url = case ENV['DOCK_ENV']
           when 'production'
             'http://floating-mesa-6194.herokuapp.com'
