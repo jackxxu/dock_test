@@ -10,6 +10,9 @@ module DockTest
       if localhost? && @server_thread.nil?
         require "rack"
         require 'webrick'
+
+        ARGV.clear # clear ARGV as it is used by Rack to configure server
+
         server = WEBrick::HTTPServer.new(:Port => port).tap do |server|
           server.mount '/', Rack::Handler::WEBrick, Rack::Server.new.app
         end

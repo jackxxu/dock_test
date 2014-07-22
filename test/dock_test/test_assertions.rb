@@ -16,7 +16,7 @@ class TestAssertions < Minitest::Test
 
   def test_assert_response_headers_method
     get '/path?foo=bar', {a: :b}, {'CONTENT_TYPE' => 'application/json'}
-    assert_response_headers({"content-type"=>["application/json"], "content-length"=>["218"], "connection"=>["Keep-Alive"]} , {exclude: ['server', 'date']})
+    assert_response_headers({"content-type"=>["application/json"]} , {exclude: ['content-length', 'server', 'connection', 'date', 'via']})
   end
 
   def test_assert_response_body_method
