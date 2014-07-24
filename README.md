@@ -51,22 +51,7 @@ DockTest.configure do |c|
 end
 ```
 
-In your integration tests, include `DockTest::Methods`, and you will have access to all the verb test methods and also assertions. Here is a minitest example:
-
-```ruby
-require 'test_helper'
-
-class ApplicationTest < Minitest::Test
-  include DockTest::Methods
-
-  def test_example
-    get '/api/json/sample_txt'
-    assert_response_headers({"content-type"=>["application/json"]}, {exclude: ['connection', 'server', 'content-length', 'x-newark-version', 'date', 'via']})
-    assert_response_status 200
-    assert_response_json_schema 'test/schemas/simple.schema.json'
-  end
-end
-```
+Add `include DockTest::Methods` to give your integration tests access to all the verb test methods and also assertions.
 
 Now you can excute your test collectively or individually, such as:
 
