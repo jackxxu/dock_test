@@ -45,7 +45,7 @@ DockTest.configure do |c|
             'http://vast-reaches-9635.herokuapp.com/' # your production service url
           when ...
           else
-            'http://localhost:9871' # your local service url
+            'http://localhost:9871' # your local service url with abitary unbound port number
           end
   c.skippy = :production # in production mode, skip all the post, delete, put requests.
 end
