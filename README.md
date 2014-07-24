@@ -1,5 +1,5 @@
 # DockTest Gem
-<img src="https://raw.githubusercontent.com/jackxxu/dock_test/master/dock_test_logo.jpeg" alt="DockTest Gem" align="left" height="200" width="200"/>
+<img src="https://raw.githubusercontent.com/jackxxu/dock_test/master/dock_test_logo.jpeg" alt="DockTest Gem" align="right" height="300" width="320"/>
 
 ### Description
 
@@ -9,8 +9,8 @@ DockTest is an outside-in testing framework for ruby service api applications.
 
 Different from the popular [Rack::Test], DockTest focuses on just on service applications and tests 100% from outside.
 
-1. 100% end-to-end as it is based on HTTP requests/responses. When testing in local mode, also racks up the local rack server.
-2. same tests can run in all environments - development, test, staging, and production.
+1. 100% end-to-end as it is based on HTTP requests/responses. When testing in local mode, it also racks up the local rack server.
+2. same tests can run for all deployment environments - development, test, staging, and production.
 3. environment-specific `skippy` setting to automatically skip tests with requests that create side-effects in production environments.
 4. focuses on service applications to strip out sessions, cookies, javascript, file uploads, and other browser-related features.
 5. provides custom assertions that are specific to api responses, including schema validation.
