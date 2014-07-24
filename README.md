@@ -18,9 +18,9 @@ Different from the popular [Rack::Test], DockTest focuses on just on service app
 
 ### Sample Application
 
-1. Rack Application based on [newark]: [https://github.com/jackxxu/sample_dock_tested_app](https://github.com/jackxxu/sample_dock_tested_app)
-2. Rack Application based on [grape]: [https://github.com/jackxxu/grape_dock_tested_app](https://github.com/jackxxu/grape_dock_tested_app)
-3. Rack Application based on [rails-api]: [https://github.com/jackxxu/rails_api_dock_tested_app](https://github.com/jackxxu/rails_api_dock_tested_app)
+1. [newark] app: [https://github.com/jackxxu/sample_dock_tested_app](https://github.com/jackxxu/sample_dock_tested_app)
+2. [grape] app: [https://github.com/jackxxu/grape_dock_tested_app](https://github.com/jackxxu/grape_dock_tested_app)
+3. [rails-api] app: [https://github.com/jackxxu/rails_api_dock_tested_app](https://github.com/jackxxu/rails_api_dock_tested_app)
 
 ### Install
 
