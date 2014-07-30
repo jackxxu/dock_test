@@ -65,7 +65,7 @@ module DockTest
       end
 
       def last_response_json
-        MultiJson.load last_response
+        MultiJson.load last_response.body
       end
 
       def last_request
