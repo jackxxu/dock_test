@@ -64,6 +64,10 @@ module DockTest
         @last_response
       end
 
+      def last_response_json
+        MultiJson.load last_response
+      end
+
       def last_request
         @last_request
       end
@@ -74,9 +78,13 @@ module DockTest
 
       # cleanse and combine url and path to retrieve a valid full url
       def full_url(url, path)
-        url = url[0..1] if url.end_with?('/')
-        path = path[1..-1] if path.start_with?('/')
-        "#{url}/#{path}"
+        if path.start_with?('http')
+          path
+        else
+          url = url[0..1] if url.end_with?('/')
+          path = path[1..-1] if path.start_with?('/')
+          "#{url}/#{path}"
+        end
       end
   end
 end
