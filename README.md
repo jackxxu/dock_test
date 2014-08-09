@@ -58,7 +58,7 @@ Add `include DockTest::Methods` to give your integration tests access to all the
 Now you can excute your test collectively or individually, such as:
 
     $ bundle exec rake test
-    $ DOCK_ENV=product bundle exec rake test
+    $ DOCK_ENV=production bundle exec rake test
 
 ### Assumptions
 
