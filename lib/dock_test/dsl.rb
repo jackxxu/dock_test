@@ -24,6 +24,14 @@ module DockTest
       end
     end
 
+    # oauth settings
+    attr_accessor :oauth_consumer_key, :oauth_consumer_secret
+
+    # if the current dock_test environment requires oauth
+    def oauth?
+      oauth_consumer_key && oauth_consumer_secret
+    end
+
     def port
       URI.parse(@url).port
     end

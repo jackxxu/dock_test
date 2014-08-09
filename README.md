@@ -15,6 +15,8 @@ Different from the popular [Rack::Test], DockTest focuses on just on service app
 4. focuses on service applications to strip out sessions, cookies, javascript, file uploads, and other browser-related features.
 5. provides custom assertions that are specific to api responses, including schema validation.
 6. same methods as [Rack::Test] for easy test reuse.
+7. support for OAuth requests
+8. support for displaying equivalent curl command using `OUTPUT_CURL` environment variable.
 
 ### Sample Application
 

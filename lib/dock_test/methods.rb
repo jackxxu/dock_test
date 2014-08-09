@@ -1,3 +1,5 @@
+require 'oauth'
+
 module DockTest
   module Methods
 
@@ -10,7 +12,8 @@ module DockTest
           skip_test_to_avoid_side_efforts
         end
 
-        uri = URI.parse(full_url(DockTest.url, path))
+        request_url = full_url(DockTest.url, path)
+        uri = URI.parse(request_url)
 
         if DockTest.localhost?
           uri.port = DockTest.port
@@ -38,7 +41,20 @@ module DockTest
         end
 
         # execute the request
-        @last_response = Net::HTTP.start(uri.hostname, uri.port) do |http|
+        @last_response = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => (uri.scheme == 'https')) do |http|
+
+          # processing oauth signing
+          if DockTest.oauth?
+            oauth_consumer = OAuth::Consumer.new(DockTest.oauth_consumer_key, DockTest.oauth_consumer_secret, site: request_url)
+            access_token = OAuth::AccessToken.new(oauth_consumer)
+            oauth_consumer.sign!(@last_request, access_token)
+          end
+
+          if ENV['OUTPUT_CURL']
+            headers_string = @last_request.to_hash.map {|key, vals| vals.map {|val| [key, val]}.flatten}.map {|x| "-H '#{x[0].capitalize}: #{x[1]}'"}.join(' ')
+            puts "curl -X #{@last_request.method.upcase} -d '#{@last_request.body}' #{headers_string} #{request_url}"
+          end
+
           http.request(@last_request)
         end
 
