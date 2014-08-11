@@ -42,14 +42,14 @@ In your test helper file (often `test/test_helper.rb`), include the following Do
 
 ```ruby
 DockTest.configure do |c|
-  c.url = case ENV['DOCK_ENV']
-          when 'production'
-            'http://vast-reaches-9635.herokuapp.com/' # your production service url
-          when ...
-          else
-            'http://localhost:9871' # your local service url with abitary unbound port number
-          end
-  c.skippy = :production # in production mode, skip all the post, delete, put requests.
+  case ENV['DOCK_ENV']
+  when 'production'
+    c.url = 'http://vast-reaches-9635.herokuapp.com/' # your production service url
+    c.skippy = true
+  else
+    c.url = 'http://localhost:9871' # your local service url with abitary unbound port number
+    c.skippy = false
+  end
 end
 ```
 

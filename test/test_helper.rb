@@ -5,12 +5,13 @@ Bundler.require(:default, :test)
 require 'dock_test'
 
 DockTest.configure do |c|
-  c.url = case ENV['DOCK_ENV']
-          when 'production'
-            'http://floating-mesa-6194.herokuapp.com'
-          else
-            'http://localhost:9871'
-          end
-  c.skippy = :production
+  case ENV['DOCK_ENV']
+  when 'production'
+    c.url = 'http://floating-mesa-6194.herokuapp.com'
+    c.skippy = true
+  else
+    c.url = 'http://localhost:9871'
+    c.skippy = false
+  end
 end
 

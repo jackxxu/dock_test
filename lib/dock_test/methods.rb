@@ -8,7 +8,7 @@ module DockTest
 
         with_side_effects = verb_has_side_effects?(meth_name)
 
-        if with_side_effects && DockTest.skippy_envs.include?(dock_env)
+        if with_side_effects && DockTest.skippy?
           skip_test_to_avoid_side_efforts
         end
 

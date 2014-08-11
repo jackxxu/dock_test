@@ -40,12 +40,12 @@ module DockTest
       @url && ['127.0.0.1', 'localhost'].include?(URI.parse(@url).host)
     end
 
-    def skippy=(envs)
-      @skippy_envs = Array(envs).map(&:to_s)
+    def skippy=(skippy)
+      @skippy = skippy
     end
 
-    def skippy_envs
-      @skippy_envs ||= ['production']
+    def skippy?
+      @skippy || false
     end
 
     def configure(&block)
