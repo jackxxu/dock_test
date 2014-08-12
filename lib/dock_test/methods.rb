@@ -52,7 +52,7 @@ module DockTest
 
           if ENV['OUTPUT_CURL']
             headers_string = @last_request.to_hash.map {|key, vals| vals.map {|val| [key, val]}.flatten}.map {|x| "-H '#{x[0].capitalize}: #{x[1]}'"}.join(' ')
-            puts "curl -X #{@last_request.method.upcase} -d '#{@last_request.body}' #{headers_string} #{request_url}"
+            puts "curl -X #{@last_request.method.upcase} -d '#{@last_request.body}' #{headers_string} '#{request_url}'"
           end
 
           http.request(@last_request)
