@@ -66,11 +66,11 @@ module DockTest
       private meth_name
     end
 
-    private
+    def env
+      ENV['DOCK_ENV']
+    end
 
-      def dock_env
-        ENV['DOCK_ENV']
-      end
+    private
 
       def verb_has_side_effects?(verb)
         %w(post put patch delete).include?(verb)
