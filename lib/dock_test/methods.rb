@@ -66,10 +66,6 @@ module DockTest
       private meth_name
     end
 
-    def env
-      ENV['DOCK_ENV']
-    end
-
     private
 
       def verb_has_side_effects?(verb)
