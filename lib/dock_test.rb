@@ -1,4 +1,5 @@
 require 'multi_json'
+require 'nokogiri'
 require 'json-schema'
 require 'dock_test/version'
 require 'dock_test/methods'

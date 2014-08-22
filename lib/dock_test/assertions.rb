@@ -21,4 +21,11 @@ module Minitest::Assertions
     schema = File.open(schema_path).read
     assert JSON::Validator.validate(schema, last_response.body), "The actual response does not match the schema defined in #{schema_path}"
   end
+
+  def assert_response_xml_schema(schema_path)
+    schema = ::Nokogiri::XML::Schema(File.read(schema_path))
+    document = ::Nokogiri::XML(last_response.body)
+    assert schema.valid?(document), "The actual response does not match the schema defined in #{schema_path}"
+  end
+
 end

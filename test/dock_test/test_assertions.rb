@@ -30,4 +30,8 @@ class TestAssertions < Minitest::Test
     assert_response_json_schema 'schemas/response.schema.json'
   end
 
+  def test_assert_response_xml_schema_method
+    get '/path?foo=bar', {a: :b}, {'CONTENT_TYPE' => 'application/xml'}
+    assert_response_xml_schema 'schemas/response.schema.xsd'
+  end
 end
