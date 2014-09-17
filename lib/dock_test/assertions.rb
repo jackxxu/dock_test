@@ -25,7 +25,7 @@ module Minitest::Assertions
   def assert_response_xml_schema(schema_path)
     schema = ::Nokogiri::XML::Schema(File.read(schema_path))
     document = ::Nokogiri::XML(last_response.body)
-    assert document.root && schema.valid?(document), "The actual response does not match the schema defined in #{schema_path}"
+    assert document.root && schema.valid?(document), "The actual response does not match the schema defined in #{schema_path} because #{schema.validate(document)}"
   end
 
 end
