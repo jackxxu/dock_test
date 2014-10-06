@@ -19,7 +19,8 @@ module Minitest::Assertions
 
   def assert_response_json_schema(schema_path)
     schema = File.open(schema_path).read
-    assert JSON::Validator.validate(schema, last_response.body), "The actual response does not match the schema defined in #{schema_path}"
+    errors = JSON::Validator.fully_validate(schema, last_response.body)
+    assert errors.empty?, "The actual response does not match the schema defined in #{schema_path} because #{errors.join(', ')}"
   end
 
   def assert_response_xml_schema(schema_path)
