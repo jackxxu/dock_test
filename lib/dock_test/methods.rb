@@ -37,7 +37,7 @@ module DockTest
 
         # sets the headers
         headers.each do |key, value|
-          @last_request.add_field(key, value)
+          @last_request[key] = value
         end
 
         # execute the request

@@ -67,6 +67,11 @@ class TestMethods < Minitest::Test
     assert_equal last_response_json['headers']['CONTENT_TYPE'], 'application/json'
   end
 
+  def test_accept_header_nil
+    get '/', '', {'Accept' => nil, 'CONTENT_TYPE' => 'application/json'}
+    assert_equal last_response_json['headers']['ACCEPT'], nil
+  end
+
   private
     def last_response_json
       MultiJson.load(last_response.body)
