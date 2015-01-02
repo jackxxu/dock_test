@@ -13,7 +13,7 @@ module DockTest
 
         ARGV.clear # clear ARGV as it is used by Rack to configure server
 
-        server = WEBrick::HTTPServer.new(:Port => port).tap do |server|
+        server = WEBrick::HTTPServer.new(:Port => port, AccessLog: []).tap do |server|
           server.mount '/', Rack::Handler::WEBrick, Rack::Server.new.app
         end
         @server_thread = Thread.new { server.start }
