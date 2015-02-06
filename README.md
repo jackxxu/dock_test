@@ -17,6 +17,7 @@ Different from the popular [Rack::Test], DockTest focuses on just on service app
 6. same methods as [Rack::Test] for easy test reuse.
 7. support for OAuth requests
 8. support for displaying equivalent curl command using `OUTPUT_CURL` environment variable.
+9. support for script_name localhost testing.
 
 ### Sample Application
 

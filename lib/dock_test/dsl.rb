@@ -14,7 +14,7 @@ module DockTest
         ARGV.clear # clear ARGV as it is used by Rack to configure server
 
         server = WEBrick::HTTPServer.new(:Port => port, AccessLog: []).tap do |server|
-          server.mount '/', Rack::Handler::WEBrick, Rack::Server.new.app
+          server.mount mount_path, Rack::Handler::WEBrick, Rack::Server.new.app
         end
         @server_thread = Thread.new { server.start }
         trap('INT') do
@@ -30,6 +30,11 @@ module DockTest
     # if the current dock_test environment requires oauth
     def oauth?
       oauth_consumer_key && oauth_consumer_secret
+    end
+
+    def mount_path
+      p = URI.parse(@url).path
+      p.empty? ? '/' : p
     end
 
     def port
