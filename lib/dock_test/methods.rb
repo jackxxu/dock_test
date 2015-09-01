@@ -41,8 +41,9 @@ module DockTest
         end
 
         # execute the request
-        @last_response = Net::HTTP.start(uri.hostname, uri.port, :use_ssl => (uri.scheme == 'https')) do |http|
-
+        @last_response = Net::HTTP.start(uri.hostname, uri.port,
+                                        :use_ssl => (uri.scheme == 'https'),
+                                        :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
           # processing oauth signing
           if DockTest.oauth?
             oauth_consumer = OAuth::Consumer.new(DockTest.oauth_consumer_key, DockTest.oauth_consumer_secret, site: request_url)

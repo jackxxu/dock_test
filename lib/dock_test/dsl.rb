@@ -53,6 +53,18 @@ module DockTest
       @skippy || false
     end
 
+    def verify_ssl=(verify_ssl)
+      @verify_ssl = verify_ssl
+    end
+
+    def verify_mode
+      if @verify_ssl.nil? || @verify_ssl
+        OpenSSL::SSL::VERIFY_PEER
+      else
+        OpenSSL::SSL::VERIFY_NONE
+      end
+    end
+
     def configure(&block)
       block.call(DockTest)
     end

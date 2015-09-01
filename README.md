@@ -18,6 +18,7 @@ Different from the popular [Rack::Test], DockTest focuses on just on service app
 7. support for OAuth requests
 8. support for displaying equivalent curl command using `OUTPUT_CURL` environment variable.
 9. support for script_name localhost testing.
+10. support `verify_ssl` for specifying whether to enforce ssl verification in http connection. Optional, default is true.
 
 ### Sample Application
 
