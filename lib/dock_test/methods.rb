@@ -1,4 +1,4 @@
-require 'oauth'
+require 'simple_oauth'
 
 module DockTest
   module Methods
@@ -46,9 +46,12 @@ module DockTest
                                         :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
           # processing oauth signing
           if DockTest.oauth?
-            oauth_consumer = OAuth::Consumer.new(DockTest.oauth_consumer_key, DockTest.oauth_consumer_secret, site: request_url)
-            access_token = OAuth::AccessToken.new(oauth_consumer)
-            oauth_consumer.sign!(@last_request, access_token)
+            @last_request['Authorization'] =
+              SimpleOAuth::Header.new(@last_request.method,
+                                      request_url,
+                                      {},
+                                      :consumer_key => DockTest.oauth_consumer_key,
+                                      :consumer_secret => DockTest.oauth_consumer_secret)
           end
 
           if ENV['OUTPUT_CURL']
