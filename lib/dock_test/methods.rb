@@ -6,43 +6,27 @@ module DockTest
     %w(get post put patch delete options head).each do |meth_name|
       define_method meth_name do |path, params = '', headers = {}, &block|
 
-        with_side_effects = verb_has_side_effects?(meth_name)
-
-        if with_side_effects && DockTest.skippy?
+        if verb_has_side_effects?(meth_name) && DockTest.skippy?
           skip_test_to_avoid_side_efforts
         end
 
-        request_url = full_url(DockTest.url, path)
-        uri = URI.parse(request_url)
+        construct_request(meth_name, path, params, headers)
 
-        if DockTest.localhost?
-          uri.port = DockTest.port
-        end
+        execute_request
 
-        # add the params to the GET requests
-        if !with_side_effects && !params.empty?
-          if(params.is_a?(Hash))
-            uri.query = URI.encode_www_form(URI.decode_www_form(uri.query || '') + params.to_a)
-          else
-            uri.query = uri.query.nil? ? params : "#{uri.query}&#{params}"
-          end
-        end
+        yield @last_response if block_given?
 
-        @last_request = Net::HTTP.const_get(meth_name.capitalize).new(uri.request_uri)
+        @last_response
+      end
 
-        # add the params to the body of other requests
-        if with_side_effects
-          @last_request.body = params
-        end
+    end
 
-        # sets the headers
-        headers.each do |key, value|
-          @last_request[key] = value
-        end
+    private
 
+      def execute_request
         # execute the request
-        @last_response = Net::HTTP.start(uri.hostname, uri.port,
-                                        :use_ssl => (uri.scheme == 'https'),
+        @last_response = Net::HTTP.start(@uri.hostname, @uri.port,
+                                        :use_ssl => (@uri.scheme == 'https'),
                                         :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
           # processing oauth signing
           if DockTest.oauth?
@@ -61,16 +45,44 @@ module DockTest
 
           http.request(@last_request)
         end
-
-        yield @last_response if block_given?
-
-        @last_response
       end
 
-      private meth_name
-    end
+      def construct_request(meth_name, path, params, headers)
 
-    private
+        construct_uri(meth_name, path, params)
+
+        @last_request = Net::HTTP.const_get(meth_name.capitalize).new(@uri.request_uri).tap do |req|
+
+          # add the params to the body of other requests
+          if verb_has_side_effects?(meth_name)
+            req.body = params
+          end
+
+          # sets the headers
+          headers.each do |key, value|
+            req[key] = value
+          end
+        end
+      end
+
+      def construct_uri(meth_name, path, params)
+        request_url = full_url(DockTest.url, path)
+        @uri = URI.parse(request_url).tap do |uri|
+
+          if DockTest.localhost?
+            uri.port = DockTest.port
+          end
+
+          # add the params to the GET requests
+          if !verb_has_side_effects?(meth_name) && !params.empty?
+            if(params.is_a?(Hash))
+              uri.query = URI.encode_www_form(URI.decode_www_form(uri.query || '') + params.to_a)
+            else
+              uri.query = uri.query.nil? ? params : "#{uri.query}&#{params}"
+            end
+          end
+        end
+      end
 
       def verb_has_side_effects?(verb)
         %w(post put patch delete).include?(verb)
