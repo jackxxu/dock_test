@@ -2,6 +2,7 @@ require 'multi_json'
 require 'nokogiri'
 require 'json-schema'
 require 'dock_test/version'
+require 'dock_test/request_context'
 require 'dock_test/methods'
 require 'dock_test/dsl'
 
